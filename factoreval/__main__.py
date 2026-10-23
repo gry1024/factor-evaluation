@@ -91,6 +91,29 @@ def make_dashboard(out, name, ric, quantile, daily):
     plt.close(fig)
 
 
+def make_comparison(frame, output):
+    ordered = frame.sort_values("sharpe", ascending=True)
+    names = ordered["factor_id"].str.replace("_", " ")
+    specs = [
+        ("annual_return", "Annualized return (%)", 100),
+        ("sharpe", "Sharpe ratio", 1),
+        ("max_drawdown", "Maximum drawdown (%)", 100),
+        ("rank_ic_mean", "Rank IC", 1),
+    ]
+    fig, axes = plt.subplots(2, 2, figsize=(12, 7.5), constrained_layout=True)
+    for ax, (column, title, scale) in zip(axes.flat, specs):
+        values = ordered[column].to_numpy(dtype=float) * scale
+        colors = ["#1565c0" if name == "illiquidity" else "#78909c" for name in ordered["factor_id"]]
+        bars = ax.barh(names, values, color=colors)
+        ax.set_title(title)
+        ax.set_xlim(0, max(values) * 1.16 if len(values) else 1)
+        ax.grid(axis="x", alpha=.25)
+        ax.bar_label(bars, fmt="%.2f", padding=3, fontsize=9)
+    fig.suptitle("Single-factor comparison | 2025-01 to 2026-09", fontsize=15)
+    fig.savefig(output / "comparison.png", dpi=170)
+    plt.close(fig)
+
+
 def evaluate_one(root: Path, item: dict, out: Path, reuse_existing=False):
     sys.path.insert(0, str(root))
     from quantbt.config import load_pool
@@ -191,6 +214,7 @@ def main():
     results = [evaluate_one(root, item, output / item["id"], args.reuse_existing) for item in items]
     frame = pd.DataFrame(results).sort_values("sharpe", ascending=False)
     frame.to_csv(output / "summary.csv", index=False, float_format="%.6f")
+    make_comparison(frame, output)
     cols = ["factor_name", "ic_mean", "icir", "rank_ic_mean", "rank_icir", "annual_return", "max_drawdown", "sharpe", "sortino", "calmar", "information_ratio", "quantile_spread_mean", "avg_turnover"]
     labels = {"factor_name":"因子", "ic_mean":"IC", "icir":"ICIR", "rank_ic_mean":"RIC", "rank_icir":"RICIR", "annual_return":"ARR(年化收益)", "max_drawdown":"MDD", "sharpe":"SR", "sortino":"Sortino", "calmar":"Calmar", "information_ratio":"IR", "quantile_spread_mean":"Q5-Q1未来20日", "avg_turnover":"平均换手"}
     display = frame[cols].rename(columns=labels)
@@ -223,7 +247,7 @@ def main():
             formatted = f"{value:.4%}" if key in {"total_return", "annual_volatility", "excess_total_return", "daily_win_rate", "ic_positive_rate", "rank_ic_positive_rate", "quantile_q1_mean_forward_return", "quantile_q2_mean_forward_return", "quantile_q3_mean_forward_return", "quantile_q4_mean_forward_return", "quantile_q5_mean_forward_return", "quantile_top_bottom_spread_positive_rate"} else (f"{value:,.2f}" if key in {"total_commission", "total_stamp_duty"} else f"{value:.4f}")
             detail += f"| {label} | {formatted} |\n"
         details.append(f"### {result['factor_name']}\n\n#### 组合与预测指标\n\n{detail}\n#### 净值、回撤、IC 与分层表现\n\n![{result['factor_name']}评价图]({result['factor_id']}/dashboard.png)\n\n#### 月收益热力图\n\n![{result['factor_name']}月收益热力图]({result['factor_id']}/monthly_heatmap.png)\n")
-    (output / "summary.md").write_text("# 单因子评价结果\n\n" + table + "\n## 年度收益\n\n" + annual_table + "\n## 因子诊断\n\n" + "\n".join(details) + "\n分层收益为重叠的未来 20 日开盘到开盘诊断值，不用于 Sharpe 年化；Sharpe 等组合指标来自逐日真实撮合回测，含手续费。HAC t 统计采用最多 20 阶 Newey-West 修正。VaR/CVaR 使用历史日收益分位数。\n", encoding="utf-8")
+    (output / "summary.md").write_text("# 单因子评价结果\n\n![四因子关键指标对比](comparison.png)\n\n" + table + "\n## 年度收益\n\n" + annual_table + "\n## 因子诊断\n\n" + "\n".join(details) + "\n分层收益为重叠的未来 20 日开盘到开盘诊断值，不用于 Sharpe 年化；Sharpe 等组合指标来自逐日真实撮合回测，含手续费。HAC t 统计采用最多 20 阶 Newey-West 修正。VaR/CVaR 使用历史日收益分位数。\n", encoding="utf-8")
     print(f"Wrote {output / 'summary.md'}")
 
 

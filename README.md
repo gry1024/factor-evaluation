@@ -26,11 +26,29 @@
 
 横向对比表固定列出 **IC、ICIR、RIC（Rank IC）、RICIR、ARR（年化收益）、MDD（最大回撤）和 SR（Sharpe）**，并提供 Sortino、Calmar、IR、分层收益差和换手率。
 
-非流动性因子仪表盘：
+## 图表预览
 
-![非流动性因子的净值、回撤、RankIC 稳定性和五分组收益](examples/latest/illiquidity/dashboard.png)
+以下图表直接嵌在 README 中。点击[完整指标报告](https://github.com/gry1024/factor-evaluation/blob/main/examples/latest/summary.md)可查看每个因子的所有指标、年度收益和明细数据。
 
-![非流动性因子的月收益热力图](examples/latest/illiquidity/monthly_heatmap.png)
+<p align="center"><img src="https://raw.githubusercontent.com/gry1024/factor-evaluation/main/examples/latest/comparison.png" alt="四因子 ARR、Sharpe、MDD 与 RIC 对比" width="100%"></p>
+
+### 非流动性 / 价格冲击
+
+<p align="center"><img src="https://raw.githubusercontent.com/gry1024/factor-evaluation/main/examples/latest/illiquidity/dashboard.png" alt="非流动性因子净值、回撤、RankIC 稳定性与五分组收益" width="100%"></p>
+
+<p align="center"><img src="https://raw.githubusercontent.com/gry1024/factor-evaluation/main/examples/latest/illiquidity/monthly_heatmap.png" alt="非流动性因子月收益热力图" width="100%"></p>
+
+### 低波动
+
+<p align="center"><img src="https://raw.githubusercontent.com/gry1024/factor-evaluation/main/examples/latest/low_volatility/dashboard.png" alt="低波动因子评价图" width="100%"></p>
+
+### 收益偏度
+
+<p align="center"><img src="https://raw.githubusercontent.com/gry1024/factor-evaluation/main/examples/latest/downside_asymmetry/dashboard.png" alt="收益偏度因子评价图" width="100%"></p>
+
+### 日内反转
+
+<p align="center"><img src="https://raw.githubusercontent.com/gry1024/factor-evaluation/main/examples/latest/intraday_reversal/dashboard.png" alt="日内反转因子评价图" width="100%"></p>
 
 ## 快速开始
 
