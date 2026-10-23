@@ -1,0 +1,6 @@
+[
+  {"id":"illiquidity","name":"非流动性 / 价格冲击","pool":"factors/single_factor/illiquidity.json"},
+  {"id":"low_volatility","name":"低波动","pool":"factors/single_factor/low_volatility.json"},
+  {"id":"downside_asymmetry","name":"收益偏度","pool":"factors/single_factor/downside_asymmetry.json"},
+  {"id":"intraday_reversal","name":"日内反转","pool":"factors/single_factor/intraday_reversal.json"}
+]
