@@ -191,11 +191,11 @@ def main():
     results = [evaluate_one(root, item, output / item["id"], args.reuse_existing) for item in items]
     frame = pd.DataFrame(results).sort_values("sharpe", ascending=False)
     frame.to_csv(output / "summary.csv", index=False, float_format="%.6f")
-    cols = ["factor_name", "annual_return", "sharpe", "max_drawdown", "rank_ic_mean", "rank_icir", "quantile_spread_mean", "avg_turnover"]
-    labels = {"factor_name":"因子", "annual_return":"年化收益", "sharpe":"Sharpe", "max_drawdown":"最大回撤", "rank_ic_mean":"RankIC均值", "rank_icir":"RankICIR", "quantile_spread_mean":"Q5-Q1未来20日", "avg_turnover":"平均换手"}
+    cols = ["factor_name", "ic_mean", "icir", "rank_ic_mean", "rank_icir", "annual_return", "max_drawdown", "sharpe", "sortino", "calmar", "information_ratio", "quantile_spread_mean", "avg_turnover"]
+    labels = {"factor_name":"因子", "ic_mean":"IC", "icir":"ICIR", "rank_ic_mean":"RIC", "rank_icir":"RICIR", "annual_return":"ARR(年化收益)", "max_drawdown":"MDD", "sharpe":"SR", "sortino":"Sortino", "calmar":"Calmar", "information_ratio":"IR", "quantile_spread_mean":"Q5-Q1未来20日", "avg_turnover":"平均换手"}
     display = frame[cols].rename(columns=labels)
     table = "| " + " | ".join(display.columns) + " |\n| " + " | ".join(["---"] * len(display.columns)) + " |\n"
-    percentage_columns = {"年化收益", "最大回撤", "Q5-Q1未来20日", "平均换手"}
+    percentage_columns = {"ARR(年化收益)", "MDD", "Q5-Q1未来20日", "平均换手"}
     for row in display.itertuples(index=False, name=None):
         formatted = []
         for column, value in zip(display.columns, row):

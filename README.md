@@ -24,6 +24,8 @@
 
 [完整指标、年度收益与所有因子图表](examples/latest/summary.md)。包含累计与年化收益、年化波动、Sharpe、Sortino、最大回撤、Calmar、信息比率、基准超额、日胜率、换手、IC/RankIC、ICIR、Newey–West HAC t 统计、IC 正值比例、五分组未来收益、Beta/Alpha 估计、历史 VaR/CVaR、收益偏度和峰度。各因子的机器可读明细及逐日 IC、分层收益、月收益见 [`examples/latest/`](examples/latest/)。
 
+横向对比表固定列出 **IC、ICIR、RIC（Rank IC）、RICIR、ARR（年化收益）、MDD（最大回撤）和 SR（Sharpe）**，并提供 Sortino、Calmar、IR、分层收益差和换手率。
+
 非流动性因子仪表盘：
 
 ![非流动性因子的净值、回撤、RankIC 稳定性和五分组收益](examples/latest/illiquidity/dashboard.png)
