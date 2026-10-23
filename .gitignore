@@ -2,5 +2,6 @@ __pycache__/
 *.py[cod]
 .venv/
 reports/
+reports_v2/
 *.feather
 .pytest_cache/
