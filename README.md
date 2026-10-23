@@ -20,6 +20,16 @@
 
 数据来自上游 `showcase/all_experiments.csv`，统一区间为 2025-01-02 至 2026-09-30。非流动性因子采用成本后组合 Sharpe 排名第一；完整现成回测结果见上游项目。新跑出的 IC/分层结果由本项目直接从 Feather 行情重算。
 
+## 本轮完整评价结果
+
+[完整指标、年度收益与所有因子图表](examples/latest/summary.md)。包含累计与年化收益、年化波动、Sharpe、Sortino、最大回撤、Calmar、信息比率、基准超额、日胜率、换手、IC/RankIC、ICIR、Newey–West HAC t 统计、IC 正值比例、五分组未来收益、Beta/Alpha 估计、历史 VaR/CVaR、收益偏度和峰度。各因子的机器可读明细及逐日 IC、分层收益、月收益见 [`examples/latest/`](examples/latest/)。
+
+非流动性因子仪表盘：
+
+![非流动性因子的净值、回撤、RankIC 稳定性和五分组收益](examples/latest/illiquidity/dashboard.png)
+
+![非流动性因子的月收益热力图](examples/latest/illiquidity/monthly_heatmap.png)
+
 ## 快速开始
 
 要求 Python 3.11+，并已准备上游回测项目及其本地 Feather 行情、历史状态和指数数据。原始行情不包含在本仓库中。
@@ -48,11 +58,17 @@ reports/
   summary.md
   summary.csv
   illiquidity/
-    metrics.json
+    dashboard.png
+    monthly_heatmap.png
+    annual_returns.csv
+    monthly_returns.csv
     daily_ic.csv
     quantile_returns.csv
+    metrics.json
     backtest/       # 与上游引擎相同的完整可审计回测结果
 ```
+
+图表包含成本后净值与沪深 300 对照、组合回撤、日 RankIC 与 63 日均值、五分组未来收益，以及月度收益热力图。
 
 ## 口径与限制
 
